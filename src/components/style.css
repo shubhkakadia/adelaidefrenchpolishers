@@ -1,0 +1,60 @@
+/* Carousel */
+/* Base dot style */
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #b3b3b3; /* Gray color for inactive dots */
+    position: relative;
+}
+
+/* Active indicator with long stick and loading animation */
+.indicator-active {
+    width: 24px; /* Length of the "stick" */
+    height: 4px; /* Thin bar style */
+    border-radius: 2px;
+    background-color: #E3A890; /* Theme color */
+    overflow: hidden; /* Hide the animated loading */
+    position: relative;
+}
+
+/* Loading animation inside active indicator */
+.indicator-active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #E3A890; /* Theme color */
+    animation: loading 2s linear infinite;
+    transform-origin: left;
+    transform: scaleX(0); /* Start with no width */
+}
+
+/* Keyframes for the loading animation */
+@keyframes loading {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+
+/* HOME */
+@keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in-down {
+    animation: fadeInDown 1s ease-out forwards;
+  }
