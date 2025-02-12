@@ -38,9 +38,8 @@ export default function Slider({ beforeImage, afterImage }) {
       onMouseUp={stopDragging}
       onTouchEnd={stopDragging}
     >
-      <h1 className="text-lg mb-4">Before & After Comparison</h1>
       <div
-        className="relative w-full max-w-[900px] m-auto aspect-[70/45] overflow-hidden select-none border rounded-lg shadow-lg"
+        className="relative w-full max-w-[900px] m-auto aspect-[65/45] overflow-hidden select-none border rounded-lg shadow-lg"
         onMouseMove={handleMove}
         onTouchMove={handleMove}
         onMouseDown={startDragging}
@@ -49,7 +48,7 @@ export default function Slider({ beforeImage, afterImage }) {
         {/* After Image (Background with conditional blur) */}
         <img
           src={afterImage}
-          className="object-cover aspect-[70/45]"
+          className="object-cover aspect-[65/45]"
           style={{
             filter: shouldBlurAfter ? "blur(5px)" : "none",
           }}
@@ -58,12 +57,12 @@ export default function Slider({ beforeImage, afterImage }) {
 
         {/* Before Image (clipped with conditional blur) */}
         <div
-          className="absolute top-0 left-0 right-0 w-full max-w-[900px] aspect-[70/45] m-auto overflow-hidden select-none"
+          className="absolute top-0 left-0 right-0 w-full max-w-[900px] aspect-[65/45] m-auto overflow-hidden select-none"
           style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
         >
           <img
             src={beforeImage}
-            className="object-cover aspect-[70/45]"
+            className="object-cover aspect-[65/45]"
             style={{
               filter: shouldBlurBefore ? "blur(5px)" : "none",
             }}

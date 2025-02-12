@@ -105,13 +105,13 @@ const AboutUs = () => {
           alt="Business Owner"
           className="w-1/2 md:w-1/4 rounded-lg mb-8 md:mb-0 md:mr-8"
         />
-        <div data-aos="fade-up" className="md:text-lg text-md text-center md:text-left">
+        <div data-aos="fade-up" className="md:text-lg text-md text-center md:text-left text-gray-400">
           <p>
             At Adelaide French Polishers we have a passion for the furniture
             industry and pride ourselves on our attention to detail.
           </p>
           <p className="mt-4">
-            Business owner, Steven Greville is across your job from start to
+            Business owner, Steven Garreffa is across your job from start to
             finish and you have direct access to him with the line of work.
             Steven is a second-generation craftsman and is highly knowledgeable
             in the world of French Polish and furniture restoration.

@@ -112,7 +112,7 @@ export default function Landingpage() {
           {/* Left Column */}
           <p
             data-aos="fade-up"
-            className="md:text-center md:text-lg text-sm text-themegrey text-left"
+            className="text-center md:text-lg text-sm text-gray-400"
             data-aos-delay="600"
           >
             The team at Adelaide French Polishers pride ourselves on
@@ -125,7 +125,7 @@ export default function Landingpage() {
           {/* Right Column */}
           <p
             data-aos="fade-up"
-            className="text-left md:text-center md:text-lg text-sm text-themegrey"
+            className="text-center md:text-lg text-sm text-gray-400"
             data-aos-delay="1000"
           >
             We take the time to correctly assess your piece for the work
@@ -154,19 +154,19 @@ export default function Landingpage() {
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="md:w-[50%] w-[75%] h-auto rounded-3xl shadow-2xl"
+                  className="md:w-[50%] w-[75%] h-auto rounded-2xl shadow-2xl"
                 />
               </div>
 
               {/* Content */}
-              <div className="w-[90%] md:w-1/2 space-y-4">
+              <div className="w-[90%] md:w-1/2 space-y-4 text-center">
                 <h2 className="text-2xl font-bold text-gray-600">
                   {service.title}
                 </h2>
                 <p className="text-md text-gray-400">{service.description}</p>
 
                 {service.bulletPoints && (
-                  <ul className="list-disc pl-5 text-gray-400 space-y-2">
+                  <ul className="list-disc pl-5 text-gray-400 space-y-2 text-left">
                     {service.bulletPoints.map((point, i) => (
                       <li key={i}>{point}</li>
                     ))}

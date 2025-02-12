@@ -1,22 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-// import Dashboard from "./components/admin/dashboard";
 import Landingpage from "./components/landingpage";
 import Aboutus from "./components/aboutus";
 import Gallery from "./components/gallery";
 import Contactus from "./components/contactus";
 import Pagenotfound from "./components/pagenotfound";
-// import Login from "./components/admin/login";
-// import AdminProtectedRoutes from "./AdminProtectedRoutes";
 import Footer from "./components/footer";
-// import beforeafter from "./components/beforeafter";
 import Beforeafter from "./components/beforeafter";
 import ScrollToTop from "./components/scrollToTop";
 import NewsletterPopup from "./components/newLetterPopUp";
 import { useEffect, useState } from "react";
 
 function App() {
-
   const [showPopup, setShowPopup] = useState(false);
   const [interaction, setInteraction] = useState(false);
 
@@ -43,12 +38,11 @@ function App() {
     };
   }, [interaction]);
 
-
   return (
     <div className="bg-themewhite">
-    {/* Show Newsletter Popup */}
-    {showPopup && <NewsletterPopup />}
-    <ScrollToTop />
+      {/* Show Newsletter Popup */}
+      {showPopup && <NewsletterPopup />}
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landingpage />} />
         <Route path="/aboutus" element={<Aboutus />} />
@@ -56,15 +50,6 @@ function App() {
         <Route path="/contactus" element={<Contactus />} />
         <Route path="/beforeafter" element={<Beforeafter />} />
         <Route path="*" element={<Pagenotfound />} />
-        {/* <Route path="/adminlogin" element={<Login />} />
-        <Route
-          path="/dashbord"
-          element={
-            <AdminProtectedRoutes>
-              <Dashboard />
-            </AdminProtectedRoutes>
-          }
-        /> */}
       </Routes>
       <Footer />
     </div>

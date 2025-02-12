@@ -7,101 +7,6 @@ export default function NewsletterPopup() {
   const [email, setEmail] = useState("");
   const [isVisible, setIsVisible] = useState(true);
 
-  const STORE_NAME = process.env.REACT_APP_SHOPIFY_STORE_NAME;
-  const API_KEY = process.env.REACT_APP_SHOPIFY_API_KEY;
-
-  const getLocationFromIP = async () => {
-    try {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-
-      // Extract relevant location data
-      return {
-        city: data.city,
-        region: data.region,
-        country: data.country_name,
-        postal_code: data.postal,
-        latitude: data.latitude,
-        longitude: data.longitude,
-      };
-    } catch (error) {
-      console.error("Error fetching location:", error);
-      return null;
-    }
-  };
-
-  const addSubscriber = async (email) => {
-    try {
-      const locationData = await getLocationFromIP();
-      const response = await fetch(
-        `https://${STORE_NAME}/admin/api/2024-01/customers.json`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Shopify-Access-Token": API_KEY,
-          },
-          body: JSON.stringify({
-            customer: {
-              email: email,
-              accepts_marketing: true,
-              accepts_marketing_updated_at: new Date().toISOString(),
-              marketing_opt_in_level: "confirmed_opt_in",
-              tags: "newsletter_subscriber",
-              email_marketing_consent: {
-                state: "subscribed",
-                opt_in_level: "confirmed_opt_in",
-                consent_updated_at: new Date().toISOString(),
-              },
-              // Add location data if available
-              ...(locationData && {
-                addresses: [
-                  {
-                    address1: "", // We don't get street address from IP
-                    city: locationData.city,
-                    province: locationData.region,
-                    country: locationData.country,
-                    zip: locationData.postal_code,
-                    latitude: locationData.latitude,
-                    longitude: locationData.longitude,
-                    default: true,
-                  },
-                ],
-              }),
-            },
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Check specifically for the "already taken" error
-        if (data.errors?.email?.includes("has already been taken")) {
-          throw new Error("ALREADY_SUBSCRIBED");
-        }
-        throw new Error(JSON.stringify(data.errors) || "Subscription failed");
-      }
-
-      // Handle different HTTP status codes
-      if (response.status === 403) {
-        // Handle CORS issues
-        console.error("CORS or authentication error");
-      } else if (response.status === 429) {
-        // Handle rate limiting
-        console.error("Too many requests");
-      }
-
-      return data;
-    } catch (error) {
-      if (error.name === "TypeError" && error.message === "Failed to fetch") {
-        // Handle CORS or network errors
-        console.error("Network or CORS error");
-      }
-      throw error;
-    }
-  };
-
   const handleJoin = async () => {
     if (!validateEmail(email)) {
       toast.error("Please enter a valid email address!", {
@@ -117,7 +22,6 @@ export default function NewsletterPopup() {
     });
 
     try {
-      await addSubscriber(email);
 
       toast.update(toastId, {
         render: "Thank you for joining our newsletter!",
@@ -160,7 +64,7 @@ export default function NewsletterPopup() {
           {/* Close Button */}
           <button
             onClick={() => setIsVisible(false)}
-            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 transition"
+            className="absolute top-1 right-3 text-gray-500 hover:text-gray-800 transition md:text-[20px] text-[30px]"
           >
             ✕
           </button>
@@ -175,7 +79,7 @@ export default function NewsletterPopup() {
           </div>
 
           {/* Right Side - Content */}
-          <div className="w-full md:w-1/2 p-6 flex flex-col justify-center">
+          <div className="w-full md:w-1/2 p-6 flex flex-col justify-center md:text-left text-center">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Join Our Newsletter!
             </h2>
@@ -183,17 +87,17 @@ export default function NewsletterPopup() {
               Subscribe to our newsletter and stay updated on the latest offers,
               exclusive content, and exciting news. Don’t miss out!
             </p>
-            <div className="flex flex-col flex-wrap gap-2 md:flex-row items-center">
+            <div className="flex gap-2 items-center">
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-grow px-4 w-3/4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-theme"
+                className="flex-grow px-4 md:w-1/2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-theme"
               />
               <button
                 onClick={handleJoin}
-                className="mt-4 md:mt-0 md:ml-4 px-4 py-2 bg-theme text-white rounded-md hover:bg-theme-dark transition duration-200"
+                className="md:mt-0 md:ml-4 px-4 py-2 bg-theme text-white rounded-md hover:bg-theme-dark transition duration-200"
               >
                 Join
               </button>

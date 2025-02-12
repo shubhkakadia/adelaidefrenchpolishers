@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "./navbar";
 import location from "../assets/Location.svg";
 import emailIcon from "../assets/Email.svg";
@@ -6,9 +6,10 @@ import phone from "../assets/Phone.svg";
 import time from "../assets/Time.svg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import axios from "axios";
+import emailjs from "@emailjs/browser";
 
 export default function Contactus() {
+  const form = useRef();
   const [isNavbarCollapsed, setNavbarCollapsed] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -266,25 +267,32 @@ export default function Contactus() {
     // Show loading toast
     const loadingToast = toast.loading("Sending message...");
 
+    const templateParams = {
+      from_name: `${formData.firstName} ${formData.lastName}`,
+      from_email: formData.email,
+      message: formData.message,
+      phone_number: formData.phoneNumber,
+    };
     try {
-      // Replace yourdomain.com with your actual domain
-      const response = await fetch(process.env.REACT_APP_CONTACT_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const result = await response.json();
-
-      if (!result.success) {
-        throw new Error('Failed to send message');
-      }
+      emailjs
+        .send(
+          process.env.REACT_APP_SERVICE_ID,
+          process.env.REACT_APP_TEMPLATE_ID,
+          templateParams,
+          process.env.REACT_APP_PUBLIC_KEY
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
 
       // Success! Clear form and show success message
       toast.dismiss(loadingToast);
-      toast.success("Message sent successfully!");
+      toast.success("Message sent successfully! We'll get back to you soon.");
 
       // Reset form
       setFormData({
@@ -294,13 +302,12 @@ export default function Contactus() {
         email: "",
         message: "",
       });
-      
     } catch (error) {
       toast.dismiss(loadingToast);
       toast.error("Failed to send message. Please try again.");
       console.error("Submission error:", error);
     }
-};
+  };
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -332,8 +339,7 @@ export default function Contactus() {
   };
 
   const validateName = (name) => {
-    const nameRegex = /^[A-Za-z]+$/;
-    return nameRegex.test(name);
+    return /^[A-Za-z\s-]+$/.test(name);
   };
 
   const validatePhoneNumber = (phoneNumber) => {
@@ -348,13 +354,13 @@ export default function Contactus() {
       {/* Navbar */}
       <Navbar isCollapsed={isNavbarCollapsed} />
 
-      <div className="md:p-32 pt-32 px-10">
+      <div className="pt-32 md:px-20 px-8">
         <p className="md:text-4xl text-2xl">Contact Us</p>
 
         <div className="flex w-full justify-around md:flex-row flex-col gap-10 z-[2]">
           <div className="py-4">
             <iframe
-              className="w-[20rem] h-[20rem] md:h-[40rem] md:w-[40rem]"
+              className="w-[20rem] h-[20rem] md:h-[30rem] md:w-[40rem]"
               title="Adelaide French Polishers Location"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3272.445635850288!2d138.65071147648075!3d-34.89526457295504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ab0ca30c573fe0f%3A0xd2b95bdc0265a18d!2sAdelaide%20French%20Polishers!5e0!3m2!1sen!2sau!4v1731635371470!5m2!1sen!2sau"
               allowFullScreen=""
@@ -380,13 +386,14 @@ export default function Contactus() {
               </div>
             </div>
           </div>
-          <div className="flex items-center md:px-10 md:h-[40rem]">
+          <div className="flex items-center md:px-10 md:h-[40rem] mb-8">
             <div>
               <p className="text-gray-600 mb-4 text-center">
-                For a more accurate quote, please send us images of the damaged
-                furniture along with your name and contact details.
+                For a more accurate quote, please send us detailed information
+                of the damaged furniture along with your name and contact
+                details.
               </p>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                 <div className="relative">
                   <input
                     type="text"
@@ -412,7 +419,6 @@ export default function Contactus() {
                     value={formData.lastName}
                     onChange={handleChange}
                     placeholder=" "
-                    required
                     className="peer block w-full px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-theme"
                   />
                   <label
@@ -465,7 +471,6 @@ export default function Contactus() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder=" "
-                    required
                     className="peer block w-full px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-theme"
                   />
                   <label

@@ -18,17 +18,17 @@ export default function Navbar({ isCollapsed }) {
 
   return (
     <nav
-      className={`fixed top-6 py-2 lg:left-10 px-10 z-10 transition-all duration-300 ease-in-out ${
+      className={`fixed top-6 py-2 lg:left-10 px-10 z-20 transition-all duration-300 ease-in-out ${
         isCollapsed
-          ? `bg-themegrey opacity-95 ${!opened ? "w-[25%] " : "w-[90%]"}`
-          : "bg-transparent lg:w-[90%] w-full"
+          ? `bg-themegrey opacity-95 ${!opened ? "w-[25%]" : "w-[90%]"}`
+          : "lg:w-[90%] w-full"
       }`}
     >
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/">
           <img
-            src={isCollapsed?AFP_LOGO_WHITE:AFP_LOGO}
+            src={isCollapsed ? AFP_LOGO_WHITE : AFP_LOGO}
             alt="Adelaide French Polishers"
             className="h-16"
           />
@@ -38,7 +38,9 @@ export default function Navbar({ isCollapsed }) {
         <div className="lg:hidden">
           <button
             onClick={toggleMobileMenu}
-            className="text-white focus:outline-none"
+            className={`${
+              isCollapsed ? "text-white" : "text-black"
+            } focus:outline-none`}
           >
             <svg
               className="h-6 w-6"
@@ -98,7 +100,7 @@ export default function Navbar({ isCollapsed }) {
 
       {/* Mobile menu links */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden flex flex-col mt-4 space-y-4 bg-opacity-50 p-4 rounded-lg">
+        <div className="lg:hidden flex flex-col mt-4 space-y-4 bg-opacity-95 p-4 rounded-lg bg-themegrey text-white">
           <NavLink isCollapsed={isCollapsed} href="/aboutus">
             ABOUT US
           </NavLink>
@@ -122,7 +124,7 @@ const NavLink = ({ isCollapsed, href, children }) => (
   <Link
     to={href}
     className={`relative ${
-      isCollapsed ? "text-white" : "text-black"
+      isCollapsed ? "text-white" : "md:text-black text-white"
     } font-regular hover:text-theme transition-colors duration-300 group`}
   >
     {children}
