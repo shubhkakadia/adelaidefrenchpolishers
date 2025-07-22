@@ -1,0 +1,119 @@
+.htaccess: 
+
+# # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+
+# PassengerAppRoot "/home/adad1504/public_html/next-app"
+
+# PassengerBaseURI "/"
+
+# PassengerNodejs "/home/adad1504/nodevenv/public_html/next-app/20/bin/node"
+
+# PassengerAppType node
+
+# PassengerStartupFile server.js
+
+# # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+# # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+
+# <IfModule Litespeed>
+
+# </IfModule>
+
+# # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
+
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+
+PassengerAppRoot "/home/adad1504/public_html/next-app"
+
+PassengerBaseURI "/"
+
+PassengerNodejs "/home/adad1504/nodevenv/public_html/next-app/19/bin/node"
+
+PassengerAppType node
+
+PassengerStartupFile server.js
+
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+
+server.js:
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
+
+const dev = process.env.NODE_ENV !== 'production';
+const hostname = 'localhost';
+// For Passenger, use environment port or default
+const port = process.env.PORT || process.env.PASSENGER_PORT || 3000;
+
+console.log('Starting Next.js app...');
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Port:', port);
+
+// Initialize the Next.js app
+const app = next({ dev, hostname, port });
+const handle = app.getRequestHandler();
+
+app.prepare().then(() => {
+  console.log('Next.js app prepared successfully');
+  
+  createServer(async (req, res) => {
+    try {
+      // Parse the request URL
+      const parsedUrl = parse(req.url, true);
+      
+      // Handle the request
+      await handle(req, res, parsedUrl);
+    } catch (err) {
+      console.error('Error occurred handling', req.url, err);
+      res.statusCode = 500;
+      res.end('Internal server error');
+    }
+  })
+  .listen(port, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://${hostname}:${port}`);
+  });
+}).catch((err) => {
+  console.error('Error preparing Next.js app:', err);
+  process.exit(1);
+});
+
+package.json:
+{
+  "name": "adelaidefrenchpolishers",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "node server.js",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "aos": "^2.3.4",
+    "axios": "^1.9.0",
+    "dotenv": "^16.4.7",
+    "form-data": "^4.0.2",
+    "formidable": "^3.5.4",
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-countup": "^6.5.3",
+    "react-dom": "^19.0.0",
+    "react-toastify": "^11.0.5",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
