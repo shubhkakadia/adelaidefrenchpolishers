@@ -9,6 +9,7 @@ import NewsletterPopup from "@/components/newsLetterPopup";
 import Script from "next/script";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import imageCompression from 'browser-image-compression';
 
 const location = "/assets/Location.svg";
 const emailIcon = "/assets/Email.svg";
@@ -38,20 +39,54 @@ export default function Contactus() {
   //   setMounted(true);
   // }, []);
 
-  // Handle file selection
-  const handleFileChange = (e) => {
+  // Compress image function
+  const compressImage = async (file, targetSizeMB = 2) => {
+    const options = {
+      maxSizeMB: targetSizeMB,
+      maxWidthOrHeight: 1920, // Max resolution to maintain quality
+      useWebWorker: true,
+      fileType: file.type.includes('png') ? 'image/png' : 'image/jpeg', // Preserve format
+      initialQuality: 0.8, // Start with high quality
+    };
+
+    try {
+      const compressedFile = await imageCompression(file, options);
+      
+      // If still too large, try with lower quality
+      if (compressedFile.size > targetSizeMB * 1024 * 1024) {
+        const secondOptions = {
+          ...options,
+          maxSizeMB: targetSizeMB * 0.9, // 90% of target
+          initialQuality: 0.7,
+        };
+        return await imageCompression(file, secondOptions);
+      }
+      
+      return compressedFile;
+    } catch (error) {
+      console.error('Compression failed:', error);
+      throw new Error('Failed to compress image');
+    }
+  };
+
+  // Handle file selection with compression
+  const handleFileChange = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    // Validate file sizes before adding to selection
-    const maxFileSize = 2 * 1024 * 1024; // 2MB per file
-    const maxTotalSize = 5 * 1024 * 1024; // 5MB total
+    // Updated limits
+    const maxFileSize = 10 * 1024 * 1024; // 10MB original file size
+    const targetCompressedSize = 2 * 1024 * 1024; // 2MB after compression
+    const maxTotalSize = 10 * 1024 * 1024; // 10MB total after compression
     
+    // Filter out non-image files and oversized files
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
     const oversizedFiles = files.filter(file => file.size > maxFileSize);
-    const validFiles = files.filter(file => file.size <= maxFileSize);
+    const nonImageFiles = files.filter(file => !file.type.startsWith('image/'));
     
+    // Show warnings for rejected files
     if (oversizedFiles.length > 0) {
-      toast.error(`${oversizedFiles.length} file(s) exceed 2MB limit and were skipped`, {
+      toast.error(`${oversizedFiles.length} file(s) exceed 10MB limit and were skipped`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -64,14 +99,8 @@ export default function Contactus() {
       });
     }
 
-    if (validFiles.length === 0) return;
-
-    // Check total size including existing files
-    const currentTotalSize = selectedFiles.reduce((total, file) => total + file.size, 0);
-    const newTotalSize = validFiles.reduce((total, file) => total + file.size, 0);
-    
-    if (currentTotalSize + newTotalSize > maxTotalSize) {
-      toast.error("Total file size would exceed 5MB limit", {
+    if (nonImageFiles.length > 0) {
+      toast.error(`${nonImageFiles.length} non-image file(s) were skipped`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -82,24 +111,102 @@ export default function Contactus() {
         theme: "light",
         transition: Bounce,
       });
-      return;
     }
 
-    setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles]);
-    const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
-    setPreviewImages((prevPreviews) => [...prevPreviews, ...newPreviews]);
-    
-    if (validFiles.length > 0) {
-      toast.success(`${validFiles.length} file(s) added successfully`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+    if (imageFiles.length === 0) return;
+
+    // Show compression progress
+    const compressionToastId = toast.loading(`Compressing ${imageFiles.length} image(s)...`, {
+      position: "top-right",
+      theme: "light",
+    });
+
+    try {
+      const compressedFiles = [];
+      const compressedPreviews = [];
+
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        
+        // Update progress
+        toast.update(compressionToastId, {
+          render: `Compressing image ${i + 1} of ${imageFiles.length}...`,
+          isLoading: true,
+        });
+
+        try {
+          let processedFile = file;
+          
+          // Compress if larger than 2MB
+          if (file.size > targetCompressedSize) {
+            processedFile = await compressImage(file, 2);
+            console.log(`Compressed ${file.name}: ${(file.size / 1024 / 1024).toFixed(1)}MB → ${(processedFile.size / 1024 / 1024).toFixed(1)}MB`);
+          }
+
+          // Check total size including existing files
+          const currentTotalSize = selectedFiles.reduce((total, file) => total + file.size, 0);
+          const newTotalSize = compressedFiles.reduce((total, file) => total + file.size, 0) + processedFile.size;
+          
+          if (currentTotalSize + newTotalSize > maxTotalSize) {
+            toast.error("Total file size would exceed 10MB limit", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+            });
+            break;
+          }
+
+          compressedFiles.push(processedFile);
+          compressedPreviews.push(URL.createObjectURL(processedFile));
+        } catch (compressionError) {
+          console.error(`Failed to process ${file.name}:`, compressionError);
+          toast.error(`Failed to compress ${file.name}`, {
+            position: "top-right",
+            autoClose: 3000,
+            theme: "light",
+          });
+        }
+      }
+
+      if (compressedFiles.length > 0) {
+        setSelectedFiles((prevFiles) => [...prevFiles, ...compressedFiles]);
+        setPreviewImages((prevPreviews) => [...prevPreviews, ...compressedPreviews]);
+        
+        // Show success message
+        toast.update(compressionToastId, {
+          render: `✅ ${compressedFiles.length} image(s) processed successfully!`,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "light",
+          transition: Bounce,
+        });
+      } else {
+        toast.update(compressionToastId, {
+          render: "No images were processed",
+          type: "info",
+          isLoading: false,
+          autoClose: 3000,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      console.error('File processing error:', error);
+      toast.update(compressionToastId, {
+        render: "Failed to process images",
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
         theme: "light",
-        transition: Bounce,
       });
     }
   };
@@ -686,7 +793,7 @@ export default function Contactus() {
                           <p className="pl-1">or drag and drop</p>
                         </div>
                         <p className="text-xs text-gray-500">
-                          PNG, JPG, GIF up to 2MB each (5MB total)
+                          Images up to 10MB (auto-compressed to 2MB each)
                         </p>
                       </div>
                     </div>
@@ -696,7 +803,7 @@ export default function Contactus() {
                       <div className="mt-2 text-xs text-gray-600">
                         {selectedFiles.length} file(s) selected • {
                           (selectedFiles.reduce((total, file) => total + file.size, 0) / (1024 * 1024)).toFixed(1)
-                        }MB of 5MB used
+                        }MB of 10MB used
                       </div>
                     )}
 

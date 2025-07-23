@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 // Set file limits
 const MAX_FILE_COUNT = 5;
-const MAX_TOTAL_SIZE_MB = 5;
+const MAX_TOTAL_SIZE_MB = 10; // Updated to 10MB total
 const MAX_TOTAL_SIZE_BYTES = MAX_TOTAL_SIZE_MB * 1024 * 1024;
 
 export async function POST(request) {
