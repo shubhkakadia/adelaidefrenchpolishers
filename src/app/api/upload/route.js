@@ -65,22 +65,25 @@ export async function POST(request) {
     const today = new Date();
     const dateFolder = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
 
-    // Create folder path based on environment
-    // In your API route, add this
-    const basePath =
-      process.env.NODE_ENV === "production"
-        ? "/home/adad1504/public_html"
-        : process.cwd();
-
-    // Consider using the env variable from next.config.ts:
-const mediaDir = process.env.PUBLIC_UPLOADS_DIR || path.join(basePath, "media");
-
+    // Updated path logic for Ubuntu VPS - store in public folder
+    const isProduction = process.env.NODE_ENV === "production";
+    
+    // For Ubuntu VPS, we store directly in the public folder
+    const publicDir = isProduction 
+      ? path.join(process.cwd(), "public") 
+      : path.join(process.cwd(), "public");
+    
+    const mediaDir = path.join(publicDir, "media");
     const dateDir = path.join(mediaDir, dateFolder);
+
+    console.log("Media directory:", mediaDir);
+    console.log("Date directory:", dateDir);
 
     // Create directories if they don't exist
     try {
       await mkdir(mediaDir, { recursive: true });
       await mkdir(dateDir, { recursive: true });
+      console.log("Directories created successfully");
     } catch (error) {
       console.error("Error creating directories:", error);
       return NextResponse.json(
@@ -117,8 +120,9 @@ const mediaDir = process.env.PUBLIC_UPLOADS_DIR || path.join(basePath, "media");
 
         // Write file to disk
         await writeFile(filepath, buffer);
+        console.log("File written successfully:", filepath);
 
-        // Generate URL for the file
+        // Generate URL for the file - this should work with your domain
         const imageUrl = `https://adelaidefrenchpolishers.com.au/media/${dateFolder}/${filename}`;
         imageUrls.push(imageUrl);
       } catch (fileError) {
@@ -126,6 +130,8 @@ const mediaDir = process.env.PUBLIC_UPLOADS_DIR || path.join(basePath, "media");
         // Continue with other files instead of failing completely
       }
     }
+
+    console.log("Generated image URLs:", imageUrls);
 
     return NextResponse.json({
       success: true,

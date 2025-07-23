@@ -7,7 +7,8 @@ import Head from "next/head";
 import Image from "next/image";
 import NewsletterPopup from "@/components/newsLetterPopup";
 import Script from "next/script";
-import { Bounce, toast } from "react-toastify";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const location = "/assets/Location.svg";
 const emailIcon = "/assets/Email.svg";
@@ -102,6 +103,9 @@ export default function Contactus() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Set uploading state to true when starting
+    setIsUploading(true);
 
     console.log("Form submitted, starting process...");
 
@@ -125,6 +129,7 @@ export default function Contactus() {
         theme: "light",
         transition: Bounce,
       });
+      setIsUploading(false);
       return;
     }
     // First name should only contain letters!
@@ -140,6 +145,7 @@ export default function Contactus() {
         theme: "light",
         transition: Bounce,
       });
+      setIsUploading(false);
       return;
     }
 
@@ -155,6 +161,7 @@ export default function Contactus() {
         theme: "light",
         transition: Bounce,
       });
+      setIsUploading(false);
       return;
     }
 
@@ -170,6 +177,7 @@ export default function Contactus() {
         theme: "light",
         transition: Bounce,
       });
+      setIsUploading(false);
       return;
     }
 
@@ -185,6 +193,7 @@ export default function Contactus() {
         theme: "light",
         transition: Bounce,
       });
+      setIsUploading(false);
       return;
     }
 
@@ -232,7 +241,8 @@ export default function Contactus() {
           });
 
           if (!uploadResponse.ok) {
-            throw new Error("Failed to upload images");
+            const errorData = await uploadResponse.json();
+            throw new Error(errorData.message || "Failed to upload images");
           }
 
           const uploadResult = await uploadResponse.json();
@@ -491,7 +501,7 @@ export default function Contactus() {
 
             {/* Contact Form Section */}
             <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
-              <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="bg-white py-6 rounded-lg">
                 <p className="text-gray-600 mb-6 text-center text-sm sm:text-base">
                   For a more accurate quote, please send us detailed information
                   of the damaged furniture along with your name and contact
@@ -663,9 +673,16 @@ export default function Contactus() {
                   <button
                     type="submit"
                     disabled={isUploading}
-                    className="w-full bg-[#E3A890] text-white py-3 rounded-lg hover:bg-[#d89880] transition duration-200 font-medium cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full bg-[#E3A890] text-white py-3 rounded-lg hover:bg-[#d89880] transition duration-200 font-medium cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    {isUploading ? "Submitting..." : "Submit"}
+                    {isUploading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Submitting...
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                   </button>
                 </form>
               </div>
@@ -673,6 +690,10 @@ export default function Contactus() {
           </div>
         </div>
       </main>
+      
+      {/* Toast Container */}
+      <ToastContainer />
+      
       <Script id="local-business-schema" type="application/ld+json">
         {`
   {
