@@ -43,9 +43,65 @@ export default function Contactus() {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
-    const newPreviews = files.map((file) => URL.createObjectURL(file));
+    // Validate file sizes before adding to selection
+    const maxFileSize = 2 * 1024 * 1024; // 2MB per file
+    const maxTotalSize = 5 * 1024 * 1024; // 5MB total
+    
+    const oversizedFiles = files.filter(file => file.size > maxFileSize);
+    const validFiles = files.filter(file => file.size <= maxFileSize);
+    
+    if (oversizedFiles.length > 0) {
+      toast.error(`${oversizedFiles.length} file(s) exceed 2MB limit and were skipped`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+
+    if (validFiles.length === 0) return;
+
+    // Check total size including existing files
+    const currentTotalSize = selectedFiles.reduce((total, file) => total + file.size, 0);
+    const newTotalSize = validFiles.reduce((total, file) => total + file.size, 0);
+    
+    if (currentTotalSize + newTotalSize > maxTotalSize) {
+      toast.error("Total file size would exceed 5MB limit", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+
+    setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles]);
+    const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
     setPreviewImages((prevPreviews) => [...prevPreviews, ...newPreviews]);
+    
+    if (validFiles.length > 0) {
+      toast.success(`${validFiles.length} file(s) added successfully`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
   // Remove an image from selection
@@ -630,10 +686,19 @@ export default function Contactus() {
                           <p className="pl-1">or drag and drop</p>
                         </div>
                         <p className="text-xs text-gray-500">
-                          PNG, JPG, GIF up to 10MB
+                          PNG, JPG, GIF up to 2MB each (5MB total)
                         </p>
                       </div>
                     </div>
+
+                    {/* Show current upload size */}
+                    {selectedFiles.length > 0 && (
+                      <div className="mt-2 text-xs text-gray-600">
+                        {selectedFiles.length} file(s) selected • {
+                          (selectedFiles.reduce((total, file) => total + file.size, 0) / (1024 * 1024)).toFixed(1)
+                        }MB of 5MB used
+                      </div>
+                    )}
 
                     {/* Preview selected images */}
                     {previewImages.length > 0 && (
