@@ -88,6 +88,29 @@ export default function Footer() {
           height={200}
           className="h-[100px] w-auto"
         />
+        
+        {/* Quick Links Section */}
+        <div className="flex flex-col items-center mb-6 md:mb-0">
+          <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
+          <div className="grid grid-cols-2 md:grid-cols-1 gap-2 text-sm">
+            <Link href="/aboutus" className="hover:text-[#E3A890] transition-colors duration-200">
+              About Us
+            </Link>
+            <Link href="/beforeafter" className="hover:text-[#E3A890] transition-colors duration-200">
+              Before & After
+            </Link>
+            <Link href="/contactus" className="hover:text-[#E3A890] transition-colors duration-200">
+              Contact Us
+            </Link>
+            <Link href="/gallery" className="hover:text-[#E3A890] transition-colors duration-200">
+              Gallery
+            </Link>
+            <Link href="/movingservice" className="hover:text-[#E3A890] transition-colors duration-200">
+              Moving Service
+            </Link>
+          </div>
+        </div>
+
         <div>
           <p className="mb-4">Join our mailing list for updates</p>
           <div className="flex items-center bg-white rounded-full border border-gray-300 overflow-hidden">

@@ -70,7 +70,58 @@ const items11_3 =
 const items11_4 =
   "/assets/gallery media/adelaidefrenchpolishersandrestoration20_medium.avif";
 
+const items12_1 = "/assets/gallery media/Huon_Pine_4.jpg";
+const items12_2 = "/assets/gallery media/Huon_Pine_2.jpg";
+const items12_3 = "/assets/gallery media/Huon_Pine_3.jpg";
+const items12_4 = "/assets/gallery media/Huon_Pine_1.jpg";
+
+const items13_1 = "/assets/gallery media/American_Oak_Dinning_Table_1.jpg";
+const items13_2 = "/assets/gallery media/American_Oak_Dinning_Table_2.jpg";
+const items13_3 = "/assets/gallery media/American_Oak_Dinning_Table_3.jpg";
+
+const items14_1 = "/assets/gallery media/BlackwoodDiningTable1.jpg";
+const items14_2 = "/assets/gallery media/BlackwoodDiningTable2.jpg";
+
+const items15_1 = "/assets/gallery media/JarrahShelf1.jpg";
+
 export const items = [
+  {
+    name: "Huon Pine Live Edge Table",
+    id: "12",
+    dateAdded: "1754022971",
+    likeCount: 1,
+    media: [items12_1, items12_2, items12_3, items12_4],
+    description:
+      "There’s nothing quite like Huon Pine, its natural grain, rich tones, and durability make it one of Australia’s most prized timbers. This stunning transformation brought out the true beauty of the live edge slab. The table was carefully restored, polished, and finished to highlight its organic curves and golden hues.",
+  },
+  {
+    name: "Custom solid American Oak dining table",
+    id: "13",
+    dateAdded: "1754022971",
+    likeCount: 1,
+    media: [items13_1, items13_2, items13_3],
+    description:
+      "Here’s a special piece straight from our workshop — a custom solid American Oak dining table, handcrafted using leftover timber from a staircase project. Each small block of American Oak was carefully selected, aligned, and glued by hand to create this stunning patchwork-style tabletop. The rich, natural grain patterns give every inch of the surface a unique character, making this more than just a table — it’s a conversation starter and a statement of craftsmanship. Not only does it showcase the beauty and durability of American Oak, but it also reflects our commitment to sustainable practices — turning what would have been waste into something timeless.",
+  },
+  {
+    name: "Blackwood Dining Table Makeover",
+    id: "14",
+    dateAdded: "1754022971",
+    likeCount: 1,
+    media: [items14_1, items14_2],
+    description:
+      "We recently had the pleasure of restoring this beautiful blackwood dining table, originally crafted by Furniture Design Australia. It had suffered water damage, but with some expert care, it’s now looking better than ever! We repaired the damage and finished the table with a high-quality 2PAC acrylic coating — enhancing the natural beauty of the timber while giving it a sleek, durable finish built to last. 🪵 Now it’s ready to shine again in any space!",
+  },
+  {
+    name: "Jarrah Shelf",
+    id: "15",
+    dateAdded: "1754022971",
+    likeCount: 1,
+    media: [items15_1],
+    description:
+      "This beautifully shelf is made from solid Jarrah timber, one of Australia’s most prized native hardwoods. Known for its deep, rich tones and striking grain, Jarrah is as durable as it is beautiful—naturally resistant to termites, moisture, and decay. Its strength and character make it a favorite for timeless furniture and joinery. Every piece tells a story through its unique texture and color, adding warmth, elegance, and longevity to any space it’s placed in.",
+  },
+
   {
     name: "Restored Board Room Table",
     id: "1",

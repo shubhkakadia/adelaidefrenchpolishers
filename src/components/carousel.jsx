@@ -40,7 +40,7 @@ export default function Carousel({ images }) {
             alt={`Slide ${index + 1}`}
             width={1920}
             height={1080}
-            className={`absolute w-full h-full object-cover transition-opacity duration-500 ease-in-out ${
+            className={`absolute w-full h-full object-contain transition-opacity duration-500 ease-in-out ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
           />

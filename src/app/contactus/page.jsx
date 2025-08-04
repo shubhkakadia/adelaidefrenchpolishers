@@ -5,11 +5,9 @@ import Navbar from "@/components/navbar";
 import emailjs from "@emailjs/browser";
 import Head from "next/head";
 import Image from "next/image";
-import NewsletterPopup from "@/components/newsLetterPopup";
 import Script from "next/script";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import imageCompression from 'browser-image-compression';
 
 const location = "/assets/Location.svg";
 const emailIcon = "/assets/Email.svg";
@@ -39,64 +37,38 @@ export default function Contactus() {
   //   setMounted(true);
   // }, []);
 
-  // Compress image function
-  const compressImage = async (file, targetSizeMB = 2) => {
-    const options = {
-      maxSizeMB: targetSizeMB,
-      maxWidthOrHeight: 1920, // Max resolution to maintain quality
-      useWebWorker: true,
-      fileType: file.type.includes('png') ? 'image/png' : 'image/jpeg', // Preserve format
-      initialQuality: 0.8, // Start with high quality
-    };
-
-    try {
-      const compressedFile = await imageCompression(file, options);
-      
-      // If still too large, try with lower quality
-      if (compressedFile.size > targetSizeMB * 1024 * 1024) {
-        const secondOptions = {
-          ...options,
-          maxSizeMB: targetSizeMB * 0.9, // 90% of target
-          initialQuality: 0.7,
-        };
-        return await imageCompression(file, secondOptions);
-      }
-      
-      return compressedFile;
-    } catch (error) {
-      console.error('Compression failed:', error);
-      throw new Error('Failed to compress image');
-    }
-  };
-
-  // Handle file selection with compression
-  const handleFileChange = async (e) => {
+  // Handle file selection without compression
+  const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    // Updated limits
-    const maxFileSize = 10 * 1024 * 1024; // 10MB original file size
-    const targetCompressedSize = 2 * 1024 * 1024; // 2MB after compression
-    const maxTotalSize = 10 * 1024 * 1024; // 10MB total after compression
-    
+    // File limits without compression
+    const maxFileSize = 10 * 1024 * 1024; // 10MB per file
+    const maxTotalSize = 10 * 1024 * 1024; // 10MB total
+
     // Filter out non-image files and oversized files
-    const imageFiles = files.filter(file => file.type.startsWith('image/'));
-    const oversizedFiles = files.filter(file => file.size > maxFileSize);
-    const nonImageFiles = files.filter(file => !file.type.startsWith('image/'));
-    
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+    const oversizedFiles = files.filter((file) => file.size > maxFileSize);
+    const nonImageFiles = files.filter(
+      (file) => !file.type.startsWith("image/")
+    );
+
     // Show warnings for rejected files
     if (oversizedFiles.length > 0) {
-      toast.error(`${oversizedFiles.length} file(s) exceed 10MB limit and were skipped`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(
+        `${oversizedFiles.length} file(s) exceed 10MB limit and were skipped`,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        }
+      );
     }
 
     if (nonImageFiles.length > 0) {
@@ -115,98 +87,54 @@ export default function Contactus() {
 
     if (imageFiles.length === 0) return;
 
-    // Show compression progress
-    const compressionToastId = toast.loading(`Compressing ${imageFiles.length} image(s)...`, {
-      position: "top-right",
-      theme: "light",
-    });
+    // Process files directly without compression
+    const validFiles = [];
+    const newPreviews = [];
 
-    try {
-      const compressedFiles = [];
-      const compressedPreviews = [];
+    for (const file of imageFiles) {
+      // Check total size including existing files
+      const currentTotalSize = selectedFiles.reduce(
+        (total, existingFile) => total + existingFile.size,
+        0
+      );
+      const newTotalSize =
+        validFiles.reduce((total, newFile) => total + newFile.size, 0) +
+        file.size;
 
-      for (let i = 0; i < imageFiles.length; i++) {
-        const file = imageFiles[i];
-        
-        // Update progress
-        toast.update(compressionToastId, {
-          render: `Compressing image ${i + 1} of ${imageFiles.length}...`,
-          isLoading: true,
-        });
-
-        try {
-          let processedFile = file;
-          
-          // Compress if larger than 2MB
-          if (file.size > targetCompressedSize) {
-            processedFile = await compressImage(file, 2);
-            console.log(`Compressed ${file.name}: ${(file.size / 1024 / 1024).toFixed(1)}MB → ${(processedFile.size / 1024 / 1024).toFixed(1)}MB`);
-          }
-
-          // Check total size including existing files
-          const currentTotalSize = selectedFiles.reduce((total, file) => total + file.size, 0);
-          const newTotalSize = compressedFiles.reduce((total, file) => total + file.size, 0) + processedFile.size;
-          
-          if (currentTotalSize + newTotalSize > maxTotalSize) {
-            toast.error("Total file size would exceed 10MB limit", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              transition: Bounce,
-            });
-            break;
-          }
-
-          compressedFiles.push(processedFile);
-          compressedPreviews.push(URL.createObjectURL(processedFile));
-        } catch (compressionError) {
-          console.error(`Failed to process ${file.name}:`, compressionError);
-          toast.error(`Failed to compress ${file.name}`, {
-            position: "top-right",
-            autoClose: 3000,
-            theme: "light",
-          });
-        }
-      }
-
-      if (compressedFiles.length > 0) {
-        setSelectedFiles((prevFiles) => [...prevFiles, ...compressedFiles]);
-        setPreviewImages((prevPreviews) => [...prevPreviews, ...compressedPreviews]);
-        
-        // Show success message
-        toast.update(compressionToastId, {
-          render: `✅ ${compressedFiles.length} image(s) processed successfully!`,
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
+      if (currentTotalSize + newTotalSize > maxTotalSize) {
+        toast.error("Total file size would exceed 10MB limit", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
+          progress: undefined,
           theme: "light",
           transition: Bounce,
         });
-      } else {
-        toast.update(compressionToastId, {
-          render: "No images were processed",
-          type: "info",
-          isLoading: false,
-          autoClose: 3000,
-          theme: "light",
-        });
+        break;
       }
-    } catch (error) {
-      console.error('File processing error:', error);
-      toast.update(compressionToastId, {
-        render: "Failed to process images",
-        type: "error",
-        isLoading: false,
-        autoClose: 5000,
+
+      validFiles.push(file);
+      newPreviews.push(URL.createObjectURL(file));
+    }
+
+    if (validFiles.length > 0) {
+      setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles]);
+      setPreviewImages((prevPreviews) => [...prevPreviews, ...newPreviews]);
+
+      // Show success message
+      toast.success(`✅ ${validFiles.length} image(s) added successfully!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
         theme: "light",
+        transition: Bounce,
       });
     }
   };
@@ -266,7 +194,7 @@ export default function Contactus() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Set uploading state to true when starting
     setIsUploading(true);
 
@@ -559,13 +487,6 @@ export default function Contactus() {
       `}
       </Script>
 
-      {/* {showPopup && <NewsletterPopup onClose={() => setShowPopup(false)} onSubmit={() => setShowPopup(false)} />} */}
-      {showPopup && (
-        <NewsletterPopup
-          onClose={() => setShowPopup(false)}
-          onSubmit={() => setShowPopup(false)}
-        />
-      )}
       {/* Navbar */}
       <Navbar isCollapsed={isNavbarCollapsed} />
 
@@ -595,7 +516,7 @@ export default function Contactus() {
                   href="https://maps.app.goo.gl/2PVq6Wff2qW3ZcrL6"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-3 hover:text-[#E3A890] transition-colors"
                   aria-label="View our location on Google Maps"
                 >
                   <div className="flex-shrink-0">
@@ -612,7 +533,7 @@ export default function Contactus() {
 
                 <a
                   href="mailto:admin@adelaidefrenchpolishers.com.au"
-                  className="flex items-center gap-3 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-3 hover:text-[#E3A890] transition-colors"
                   aria-label="Send us an email"
                 >
                   <div className="flex-shrink-0">
@@ -631,7 +552,7 @@ export default function Contactus() {
 
                 <a
                   href="tel:0881653886"
-                  className="flex items-center gap-3 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-3 hover:text-[#E3A890] transition-colors"
                   aria-label="Call our office"
                 >
                   <div className="flex-shrink-0">
@@ -660,7 +581,6 @@ export default function Contactus() {
                 </div>
               </div>
             </div>
-            
 
             {/* Contact Form Section */}
             <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
@@ -684,7 +604,7 @@ export default function Contactus() {
                         className="peer block w-full px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-[#E3A890]"
                       />
                       <label className="absolute mx-1 rounded text-sm text-gray-500 duration-300 transform -translate-y-3 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#E3A890] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">
-                        First Name
+                        First Name *
                       </label>
                     </div>
 
@@ -699,7 +619,7 @@ export default function Contactus() {
                         className="peer block w-full px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-[#E3A890]"
                       />
                       <label className="absolute mx-1 rounded text-sm text-gray-500 duration-300 transform -translate-y-3 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#E3A890] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">
-                        Last Name
+                        Last Name *
                       </label>
                     </div>
                   </div>
@@ -715,7 +635,7 @@ export default function Contactus() {
                       className="peer block w-full px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-[#E3A890]"
                     />
                     <label className="absolute mx-1 rounded text-sm text-gray-500 duration-300 transform -translate-y-3 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#E3A890] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">
-                      Phone Number
+                      Phone Number *
                     </label>
                   </div>
 
@@ -730,7 +650,7 @@ export default function Contactus() {
                       className="peer block w-full px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-[#E3A890]"
                     />
                     <label className="absolute mx-1 rounded text-sm text-gray-500 duration-300 transform -translate-y-3 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#E3A890] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">
-                      Email
+                      Email *
                     </label>
                   </div>
 
@@ -745,7 +665,7 @@ export default function Contactus() {
                       className="peer block w-full px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-[#E3A890]"
                     />
                     <label className="absolute mx-1 rounded text-sm text-gray-500 duration-300 transform -translate-y-3 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#E3A890] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">
-                      Message
+                      Message *
                     </label>
                   </div>
 
@@ -753,12 +673,7 @@ export default function Contactus() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Attach Photos (optional)
                     </label>
-                    <div
-                      className="cursor-pointer hover:border-[#E3A890]  mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
-                      onClick={() =>
-                        document.getElementById("file-upload").click()
-                      }
-                    >
+                    <div className="cursor-pointer hover:border-[#E3A890]  mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         <svg
                           className="mx-auto h-12 w-12 text-gray-400"
@@ -801,9 +716,15 @@ export default function Contactus() {
                     {/* Show current upload size */}
                     {selectedFiles.length > 0 && (
                       <div className="mt-2 text-xs text-gray-600">
-                        {selectedFiles.length} file(s) selected • {
-                          (selectedFiles.reduce((total, file) => total + file.size, 0) / (1024 * 1024)).toFixed(1)
-                        }MB of 10MB used
+                        {selectedFiles.length} file(s) selected •{" "}
+                        {(
+                          selectedFiles.reduce(
+                            (total, file) => total + file.size,
+                            0
+                          ) /
+                          (1024 * 1024)
+                        ).toFixed(1)}
+                        MB of 10MB used
                       </div>
                     )}
 
@@ -862,10 +783,10 @@ export default function Contactus() {
           </div>
         </div>
       </main>
-      
+
       {/* Toast Container */}
       <ToastContainer />
-      
+
       <Script id="local-business-schema" type="application/ld+json">
         {`
   {

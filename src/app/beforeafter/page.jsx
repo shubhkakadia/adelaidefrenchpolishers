@@ -12,7 +12,7 @@ import Script from "next/script";
 const ProjectCard = ({ job, isSelected, onClick }) => (
   <button
     onClick={onClick}
-    className={`group relative overflow-hidden rounded-lg transition-all duration-300 ${
+    className={`cursor-pointer group relative overflow-hidden rounded-lg transition-all duration-300 ${
       isSelected ? "ring-2 ring-[#E3A890]" : "hover:ring-2 hover:ring-gray-300"
     }`}
   >
@@ -109,12 +109,12 @@ export default function Beforeafter() {
         `}
         </Script>
       </Head>
-            {showPopup && (
-              <NewsletterPopup
-                onClose={() => setShowPopup(false)}
-                onSubmit={() => setShowPopup(false)}
-              />
-            )}
+      {showPopup && (
+        <NewsletterPopup
+          onClose={() => setShowPopup(false)}
+          onSubmit={() => setShowPopup(false)}
+        />
+      )}
 
       <Navbar isCollapsed={isNavbarCollapsed} />
 
@@ -133,7 +133,7 @@ export default function Beforeafter() {
           {beforeafter?.map((category, index) => (
             <button
               key={index}
-              className={`text-lg px-4 py-2 rounded-md transition-colors duration-300 ${
+              className={`cursor-pointer text-lg px-4 py-2 rounded-md transition-colors duration-300 ${
                 selectedCategory.name === category.name
                   ? "text-[#E3A890] underline"
                   : "hover:text-[#E3A890]"

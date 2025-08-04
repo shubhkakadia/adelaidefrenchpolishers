@@ -139,7 +139,7 @@ export default function AboutUs() {
       {/* Navbar */}
       <Navbar isCollapsed={isNavbarCollapsed} />
 
-      <section className="h-screen flex items-center justify-center px-8">
+      <section className="h-screen flex items-center justify-center md:px-8 px-4">
         <div className="space-y-14 text-center">
           <section className="hero-section">
             <h1
@@ -161,7 +161,7 @@ export default function AboutUs() {
             <p
               data-aos="fade-up"
               data-aos-delay={300}
-              className="text-md md:text-xl text-gray-500"
+              className="text-md md:text-xl text-gray-500 mt-4"
             >
               A second-generation family business with decades of experience in
               quality craftsmanship.
@@ -171,7 +171,7 @@ export default function AboutUs() {
       </section>
 
       {/* Icons Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-8 md:px-32 space-y-16 bg-white">
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 md:px-32 space-y-16 bg-white">
         <p
           data-aos="fade-up"
           className="text-center md:text-2xl text-md mb-8 text-gray-700"
@@ -242,7 +242,7 @@ export default function AboutUs() {
       </section>
 
       {/* Photo and Text Section */}
-      <section className="h-screen flex flex-col md:flex-row items-center justify-center md:px-64 px-8 md:space-x-10">
+      <section className="h-screen flex flex-col md:flex-row items-center justify-center md:px-64 px-4 md:space-x-10">
         <Image
           data-aos="fade-up"
           src={steven}
@@ -264,7 +264,7 @@ export default function AboutUs() {
             Business owner <strong>Steven Garreffa</strong> brings decades of
             expertise as a second-generation craftsman, ensuring top-tier
             quality and consistency in every job. He personally oversees all
-            work—from consultation to final polish.
+            work, from consultation to final polish.
           </p>
           <p className="mt-4">
             Our workshop in Glynde, Adelaide uses advanced materials and

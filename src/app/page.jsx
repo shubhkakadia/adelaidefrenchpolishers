@@ -10,8 +10,10 @@ import NewsletterPopup from "@/components/newsLetterPopup";
 import Script from "next/script";
 
 const slide2 = "/assets/IMG_E7393.png";
-const slide3 = "/assets/adel_french_polishers6_480x480.webp";
+const slide3 = "/assets/gallery media/IMG_4631.jpg";
 const slide4 = "/assets/IMG_7388-after.png";
+const slide5 = "/assets/gallery media/Huon_Pine_4.jpg";
+const slide6 = "/assets/gallery media/JarrahShelf1.jpg";
 const RepairRestoration = "/assets/RepairRestoration.png";
 const ModernFinishes = "/assets/ModernFinishes.png";
 const FrenchPolishing = "/assets/FrenchPolishing.png";
@@ -77,7 +79,7 @@ export default function LandingPage() {
     },
   ];
 
-  const images = [slide2, slide3, slide4];
+  const images = [slide2, slide3, slide4, slide5, slide6];
   const [isNavbarCollapsed, setNavbarCollapsed] = useState(false);
 
   useEffect(() => {
@@ -123,7 +125,7 @@ export default function LandingPage() {
         <section className="hero-section space-y-14">
           <h1
             data-aos="fade-up"
-            className="text-xl text-center font-bold text-[#E3A890] text-shadow fade-in-down md:text-5xl"
+            className="text-xl text-center font-bold text-[#E3A890] text-shadow fade-in-down md:text-5xl px-4"
           >
             Adelaide French Polishers – Expert Furniture Restoration & French
             Polishing Services
@@ -177,7 +179,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className="min-h-screen bg-white py-32 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-white py-32 px-4 sm:px-6 md:px-8">
         <div className="max-w-7xl mx-auto space-y-32">
           {services.map((service) => (
             <div

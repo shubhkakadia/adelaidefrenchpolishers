@@ -67,12 +67,12 @@ export async function POST(request) {
 
     // Updated path logic for Ubuntu VPS - store in public folder
     const isProduction = process.env.NODE_ENV === "production";
-    
+
     // For Ubuntu VPS, we store directly in the public folder
-    const publicDir = isProduction 
-      ? path.join(process.cwd(), "public") 
+    const publicDir = isProduction
+      ? path.join(process.cwd(), "public")
       : path.join(process.cwd(), "public");
-    
+
     const mediaDir = path.join(publicDir, "media");
     const dateDir = path.join(mediaDir, dateFolder);
 
@@ -106,7 +106,25 @@ export async function POST(request) {
 
         // Generate filename: firstname_lastname_uuid.extension
         const originalName = file.name;
-        const extension = originalName.split(".").pop();
+        let extension = originalName.split(".").pop();
+
+        // Ensure we have a valid image extension
+        if (!extension || extension === originalName || extension === "blob") {
+          // If no extension or invalid, determine from MIME type
+          const mimeType = file.type;
+          if (mimeType.includes("jpeg") || mimeType.includes("jpg")) {
+            extension = "jpg";
+          } else if (mimeType.includes("png")) {
+            extension = "png";
+          } else if (mimeType.includes("gif")) {
+            extension = "gif";
+          } else if (mimeType.includes("webp")) {
+            extension = "webp";
+          } else {
+            extension = "jpg"; // Default fallback
+          }
+        }
+
         const uuid = uuidv4();
         const sanitizedFirstName = firstName
           .replace(/[^a-z0-9]/gi, "_")
