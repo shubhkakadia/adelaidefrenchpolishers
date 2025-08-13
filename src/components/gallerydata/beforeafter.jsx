@@ -14,12 +14,14 @@ const waterBefore = "/assets/beforeafter/IMG_7323 - before.DNG";
 const waterAfter = "/assets/beforeafter/IMG_7388 - after.jpg";
 
 // REMOVAL
-const removalBefore = "/assets/beforeafter/IMG_7323 - before.DNG";
-const removalAfter = "/assets/beforeafter/IMG_7388 - after.jpg";
+const removalBefore1 = "/assets/beforeafter/b4 and after 001.jpg";
+const removalAfter1 = "/assets/beforeafter/before after 001.jpg";
 
 // BURGULARY
 const burgularyBefore = "/assets/beforeafter/IMG_3509.jpg";
 const burgularyAfter = "/assets/beforeafter/IMG_3665.jpg";
+
+
 
 export const beforeafter = [
   {
@@ -59,9 +61,9 @@ export const beforeafter = [
     name: "removal",
     jobList: [
       {
-        name: "Removal Damage Restoration",
-        before: removalBefore,
-        after: removalAfter,
+        name: "Side table restoration",
+        before: removalBefore1,
+        after: removalAfter1,
       },
       // Add more removal jobs here
     ],

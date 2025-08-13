@@ -84,7 +84,137 @@ const items14_2 = "/assets/gallery media/BlackwoodDiningTable2.jpg";
 
 const items15_1 = "/assets/gallery media/JarrahShelf1.jpg";
 
+const items16_1 = "/assets/gallery media/adel french pol1.jpg";
+const items16_2 = "/assets/gallery media/adel french pol2.jpg";
+const items16_3 = "/assets/gallery media/adel french pol3.jpg";
+const items16_4 = "/assets/gallery media/adel french pol4.jpg";
+const items16_5 = "/assets/gallery media/adel french pol5.jpg";
+const items16_6 = "/assets/gallery media/adel french pol6.jpg";
+
+const items17_1 = "/assets/gallery media/adel french pol7.jpg";
+const items17_2 = "/assets/gallery media/adel french pol8.jpg";
+
+const items18_1 = "/assets/gallery media/adel french polishers1.jpg";
+const items18_2 = "/assets/gallery media/adel french polishers2.jpg";
+const items18_3 = "/assets/gallery media/adel french polishers3.jpg";
+const items18_4 = "/assets/gallery media/adel french polishers4.jpg";
+const items18_5 = "/assets/gallery media/adel french polishers5.jpg";
+const items18_6 = "/assets/gallery media/adel french polishers6.jpg";
+
+const items19_1 = "/assets/gallery media/black table1.jpg";
+const items19_2 = "/assets/gallery media/black table2.jpg";
+const items19_3 = "/assets/gallery media/black table3.jpg";
+const items19_4 = "/assets/gallery media/black table4.jpg";
+const items19_5 = "/assets/gallery media/black table5.jpg";
+
+const items20_1 = "/assets/gallery media/chest draws6.jpg";
+const items20_2 = "/assets/gallery media/chest draws7.jpg";
+const items20_3 = "/assets/gallery media/chest draws8.jpg";
+const items20_4 = "/assets/gallery media/chest draws9.jpg";
+
+const items21_1 = "/assets/gallery media/IMG_2810.jpg";
+const items21_2 = "/assets/gallery media/IMG_2808.jpg";
+const items21_3 = "/assets/gallery media/IMG_2812.jpg";
+const items21_4 = "/assets/gallery media/IMG_2814.jpg";
+const items21_5 = "/assets/gallery media/IMG_2815.jpg";
+
+const items22_1 = "/assets/gallery media/IMG_5241.jpg";
+const items22_2 = "/assets/gallery media/IMG_5243.jpg";
+
+const items23_1 = "/assets/gallery media/IMG_5985.jpg";
+const items23_2 = "/assets/gallery media/IMG_5986.jpg";
+
+const items24_1 = "/assets/gallery media/IMG_7712 (2).jpg";
+const items24_2 = "/assets/gallery media/IMG_7710 (2).jpg";
+
+const items25_1 = "/assets/gallery media/piannola1.jpg";
+const items25_2 = "/assets/gallery media/piannola2.jpg";
+const items25_3 = "/assets/gallery media/piannola3.jpg";
+const items25_4 = "/assets/gallery media/piannola5.jpg";
+const items25_5 = "/assets/gallery media/piannola7.jpg";
+
+// 1755055319
 export const items = [
+  {
+    name: "Piano",
+    id: "25",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items25_1, items25_2, items25_3, items25_4, items25_5],
+    description: "",
+  },
+  {
+    name: "Dining Table",
+    id: "24",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items24_1, items24_2],
+    description: "",
+  },
+  {
+    name: "Tv Unit",
+    id: "23",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items23_1, items23_2],
+    description: "",
+  },
+  {
+    name: "Dinning Table",
+    id: "22",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items22_1, items22_2],
+    description: "",
+  },
+  {
+    name: "Side Table",
+    id: "21",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items21_1, items21_2, items21_3, items21_4, items21_5],
+    description: "",
+  },
+  {
+    name: "Chest of Drawers",
+    id: "20",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items20_1, items20_2, items20_3, items20_4],
+    description: "",
+  },
+  {
+    name: "Black Table",
+    id: "19",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items19_1, items19_2, items19_3, items19_4, items19_5],
+    description: "",
+  },
+  {
+    name: "Cabinet",
+    id: "18",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items18_1, items18_2, items18_3, items18_4, items18_5, items18_6],
+    description: "",
+  },
+  {
+    name: "Chair",
+    id: "17",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items17_1, items17_2],
+    description: "",
+  },
+  {
+    name: "Royal Cabinet",
+    id: "16",
+    dateAdded: "1755055319",
+    likeCount: 1,
+    media: [items16_1, items16_2, items16_3, items16_4, items16_5, items16_6],
+    description: "",
+  },
   {
     name: "Huon Pine Live Edge Table",
     id: "12",

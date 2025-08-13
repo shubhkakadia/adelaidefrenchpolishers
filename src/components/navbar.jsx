@@ -27,7 +27,7 @@ export default function Navbar({ isCollapsed }) {
 
   return (
     <nav
-      className={`fixed top-6 py-2 lg:left-10 px-10 z-20 transition-all duration-300 ease-in-out ${
+      className={`fixed top-6 py-2 lg:left-10 px-8 lg:px-0 z-20 transition-all duration-300 ease-in-out ${
         isCollapsed
           ? `bg-[#404041] opacity-95 ${!opened ? "w-[25%]" : "w-[90%]"}`
           : "lg:w-[90%] w-full"
@@ -41,7 +41,7 @@ export default function Navbar({ isCollapsed }) {
             alt="Adelaide French Polishers"
             height={100}
             width={100}
-            className="h-16 w-auto"
+            className={`h-16 w-auto`}
           />
         </Link>
 
@@ -72,7 +72,7 @@ export default function Navbar({ isCollapsed }) {
 
         {/* Navbar links for larger screens */}
         {!isCollapsed || opened ? (
-          <div className="hidden lg:flex space-x-16">
+          <div className="hidden lg:flex space-x-12">
             <NavLink isCollapsed={isCollapsed} href="/aboutus">
               About Us
             </NavLink>
@@ -92,7 +92,7 @@ export default function Navbar({ isCollapsed }) {
         ) : (
           <button
             onClick={() => setOpened(true)}
-            className="text-white focus:outline-none cursor-pointer"
+            className="text-white focus:outline-none cursor-pointer mx-4"
           >
             <svg
               className="h-6 w-6 hidden lg:block"

@@ -8,12 +8,10 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import NewsletterPopup from "@/components/newsLetterPopup";
 import Script from "next/script";
-
-const slide2 = "/assets/IMG_E7393.png";
-const slide3 = "/assets/gallery media/IMG_4631.jpg";
-const slide4 = "/assets/IMG_7388-after.png";
-const slide5 = "/assets/gallery media/Huon_Pine_4.jpg";
-const slide6 = "/assets/gallery media/JarrahShelf1.jpg";
+// adel_french_polishers15_900x
+const slide1 = "/assets/gallery media/adel french pol1.jpg";
+const slide2 = "/assets/gallery media/adel french pol7.jpg";
+const slide3 = "/assets/gallery media/adel_french_polishers15_900x.webp";
 const RepairRestoration = "/assets/RepairRestoration.png";
 const ModernFinishes = "/assets/ModernFinishes.png";
 const FrenchPolishing = "/assets/FrenchPolishing.png";
@@ -79,7 +77,7 @@ export default function LandingPage() {
     },
   ];
 
-  const images = [slide2, slide3, slide4, slide5, slide6];
+  const images = [slide1, slide2, slide3];
   const [isNavbarCollapsed, setNavbarCollapsed] = useState(false);
 
   useEffect(() => {

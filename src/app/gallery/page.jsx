@@ -139,7 +139,7 @@ function SlideshowCard({ item }) {
         }`}
         width={500}
         height={350}
-        className="w-full h-[350px] object-cover transform transition-transform duration-300 group-hover:scale-105"
+        className="w-full h-[350px] object-contain transform transition-transform duration-300 group-hover:scale-105"
       />
 
       {/* Description Overlay */}
