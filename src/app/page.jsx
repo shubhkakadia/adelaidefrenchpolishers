@@ -8,6 +8,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import NewsletterPopup from "@/components/newsLetterPopup";
 import Script from "next/script";
+import Head from "next/head";
 // adel_french_polishers15_900x
 const slide1 = "/assets/gallery media/adel french pol1.jpg";
 const slide2 = "/assets/gallery media/adel french pol7.jpg";
@@ -94,6 +95,59 @@ export default function LandingPage() {
 
   return (
     <div>
+      <Head>
+        <title>
+          Adelaide French Polishers – Expert Furniture Restoration & French
+          Polishing Services | South Australia
+        </title>
+        <meta
+          name="description"
+          content="Professional furniture restoration and French polishing services across South Australia. Expert repair, refinishing, and restoration of antique and modern furniture since 1971. Serving Adelaide, Mount Gambier, Whyalla, Port Augusta, and regional SA."
+        />
+        <meta
+          name="keywords"
+          content="french polishing adelaide, furniture restoration south australia, antique furniture repair, timber furniture refinishing, spray finishes adelaide, french polishing mount gambier, furniture restoration whyalla, port augusta french polishing, port pirie furniture restoration, murray bridge french polishing, port lincoln furniture services, gawler french polishing, victor harbor furniture restoration, coober pedy french polishing, roxby downs furniture services, ceduna french polishing"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          property="og:title"
+          content="Adelaide French Polishers – Expert Furniture Restoration & French Polishing Services"
+        />
+        <meta
+          property="og:description"
+          content="Professional furniture restoration and French polishing services across South Australia. Expert craftsmanship since 1971."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://adelaidefrenchpolishers.com.au/"
+        />
+        <meta
+          property="og:image"
+          content="https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Adelaide French Polishers – Expert Furniture Restoration"
+        />
+        <meta
+          name="twitter:description"
+          content="Professional furniture restoration and French polishing services across South Australia."
+        />
+        <meta
+          name="twitter:image"
+          content="https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png"
+        />
+        <link rel="canonical" href="https://adelaidefrenchpolishers.com.au/" />
+        <meta name="geo.region" content="AU-SA" />
+        <meta name="geo.placename" content="Glynde, South Australia" />
+        <meta
+          name="geo.position"
+          content="-34.89526457295504;138.65071147648075"
+        />
+        <meta name="ICBM" content="-34.89526457295504, 138.65071147648075" />
+      </Head>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-6QGSSZ2J06"
         strategy="afterInteractive"
@@ -236,31 +290,93 @@ export default function LandingPage() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Adelaide French Polishers",
-    "image": "https://adelaidefrenchpolishers.com.au/assets/logo.jpg",
-    "description": "Professional furniture restoration and French polishing services in Adelaide",
+    "image": "https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png",
+    "description": "Professional furniture restoration and French polishing services across South Australia. Expert repair, refinishing, and restoration of antique and modern furniture since 1971.",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Adelaide",
+      "streetAddress": "24 Sunbeam Rd",
+      "addressLocality": "Glynde",
       "addressRegion": "SA",
+      "postalCode": "5070",
       "addressCountry": "AU"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": -34.9285,
-      "longitude": 138.6007
+      "latitude": -34.89526457295504,
+      "longitude": 138.65071147648075
     },
     "url": "https://adelaidefrenchpolishers.com.au/",
-    "telephone": "0881653886",
+    "telephone": "+61881653886",
+    "email": "admin@adelaidefrenchpolishers.com.au",
     "priceRange": "$$",
+    "foundingDate": "1971",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ],
     "serviceArea": {
       "@type": "GeoCircle",
       "geoMidpoint": {
         "@type": "GeoCoordinates",
-        "latitude": -34.9285,
-        "longitude": 138.6007
+        "latitude": -34.89526457295504,
+        "longitude": 138.65071147648075
       },
       "geoRadius": "50000"
     },
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Adelaide"
+      },
+      {
+        "@type": "City",
+        "name": "Mount Gambier"
+      },
+      {
+        "@type": "City",
+        "name": "Whyalla"
+      },
+      {
+        "@type": "City",
+        "name": "Port Augusta"
+      },
+      {
+        "@type": "City",
+        "name": "Port Pirie"
+      },
+      {
+        "@type": "City",
+        "name": "Murray Bridge"
+      },
+      {
+        "@type": "City",
+        "name": "Port Lincoln"
+      },
+      {
+        "@type": "City",
+        "name": "Gawler"
+      },
+      {
+        "@type": "City",
+        "name": "Victor Harbor"
+      },
+      {
+        "@type": "City",
+        "name": "Coober Pedy"
+      },
+      {
+        "@type": "City",
+        "name": "Roxby Downs"
+      },
+      {
+        "@type": "City",
+        "name": "Ceduna"
+      }
+    ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Furniture Restoration Services",
@@ -270,7 +386,7 @@ export default function LandingPage() {
           "itemOffered": {
             "@type": "Service",
             "name": "French Polishing",
-            "description": "Traditional French polishing for antique furniture"
+            "description": "Traditional French polishing for antique furniture, pianos, and staircases"
           }
         },
         {
@@ -278,10 +394,31 @@ export default function LandingPage() {
           "itemOffered": {
             "@type": "Service",
             "name": "Furniture Restoration",
-            "description": "Complete restoration of antique and modern furniture"
+            "description": "Complete restoration of antique and modern furniture including repairs and refinishing"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Modern Finishes",
+            "description": "Two-pack, water-based, and metallic spray finishes for modern furniture"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Furniture Moving",
+            "description": "Professional furniture moving and delivery services across South Australia"
           }
         }
       ]
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "15"
     }
   }
 `}

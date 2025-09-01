@@ -49,12 +49,40 @@ export default function MovingService() {
   return (
     <>
       <Head>
-        <title>Furniture Moving Services | Adelaide French Polishers</title>
+        <title>
+          Furniture Moving Services | Adelaide French Polishers | South
+          Australia Transport
+        </title>
         <meta
           name="description"
-          content="Adelaide French Polishers now offers reliable furniture moving services with our large van. Perfect for relocations, deliveries, and furniture transport. Book now!"
+          content="Adelaide French Polishers offers reliable furniture moving services across South Australia with our large van. Perfect for relocations, deliveries, and furniture transport. Professional moving services in Adelaide, Mount Gambier, Whyalla, and regional SA."
+        />
+        <meta
+          name="keywords"
+          content="furniture moving services adelaide, furniture transport south australia, furniture delivery adelaide, furniture relocation services, furniture moving mount gambier, furniture transport whyalla, furniture delivery port augusta, furniture moving port pirie, furniture transport murray bridge, furniture delivery port lincoln, furniture moving gawler, furniture transport victor harbor"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          property="og:title"
+          content="Furniture Moving Services | Adelaide French Polishers"
+        />
+        <meta
+          property="og:description"
+          content="Reliable furniture moving services across South Australia with our large van. Perfect for relocations, deliveries, and furniture transport."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://adelaidefrenchpolishers.com.au/movingservice"
+        />
+        <meta
+          property="og:image"
+          content="https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png"
+        />
+        <link
+          rel="canonical"
+          href="https://adelaidefrenchpolishers.com.au/movingservice"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-6QGSSZ2J06"
           strategy="afterInteractive"

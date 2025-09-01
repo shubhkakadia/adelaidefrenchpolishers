@@ -107,14 +107,39 @@ export default function AboutUs() {
     <div>
       <Head>
         <title>
-          About Us | Adelaide French Polishers – Trusted Furniture Restoration
-          Experts
+          About Us | Adelaide French Polishers - Trusted Furniture Restoration
+          Experts | South Australia
         </title>
         <meta
           name="description"
-          content="Learn about Adelaide French Polishers – a second-generation, family-run furniture restoration business specializing in French polishing, antique restoration, and eco-conscious craftsmanship."
+          content="Learn about Adelaide French Polishers - a second-generation, family-run furniture restoration business since 1971, specializing in French polishing, antique restoration, and eco-conscious craftsmanship across South Australia."
+        />
+        <meta
+          name="keywords"
+          content="adelaide french polishers about, steven garreffa furniture restoration, french polishing expert adelaide, furniture restoration family business, antique furniture restoration adelaide, french polishing craftsmanship, furniture restoration since 1971, glynde furniture restoration"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          property="og:title"
+          content="About Us | Adelaide French Polishers - Trusted Furniture Restoration Experts"
+        />
+        <meta
+          property="og:description"
+          content="Learn about Adelaide French Polishers - a second-generation, family-run furniture restoration business since 1971."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://adelaidefrenchpolishers.com.au/aboutus"
+        />
+        <meta
+          property="og:image"
+          content="https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png"
+        />
+        <link
+          rel="canonical"
+          href="https://adelaidefrenchpolishers.com.au/aboutus"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-6QGSSZ2J06"
           strategy="afterInteractive"

@@ -464,13 +464,38 @@ export default function Contactus() {
       <Head>
         <title>
           Contact Us | Adelaide French Polishers | Get a Furniture Restoration
-          Quote
+          Quote | South Australia
         </title>
         <meta
           name="description"
-          content="Contact Adelaide French Polishers for professional furniture restoration, French polishing, and refinishing services. Located in Glynde, SA. Call or email us today!"
+          content="Contact Adelaide French Polishers for professional furniture restoration, French polishing, and refinishing services across South Australia. Located in Glynde, SA. Call (08) 8165 3886 or email us today for free quotes!"
+        />
+        <meta
+          name="keywords"
+          content="contact adelaide french polishers, furniture restoration quote adelaide, french polishing contact, furniture restoration phone number, adelaide french polishers contact, furniture restoration email, french polishing quote south australia, furniture restoration consultation"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          property="og:title"
+          content="Contact Us | Adelaide French Polishers | Get a Furniture Restoration Quote"
+        />
+        <meta
+          property="og:description"
+          content="Contact Adelaide French Polishers for professional furniture restoration, French polishing, and refinishing services. Located in Glynde, SA."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://adelaidefrenchpolishers.com.au/contactus"
+        />
+        <meta
+          property="og:image"
+          content="https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png"
+        />
+        <link
+          rel="canonical"
+          href="https://adelaidefrenchpolishers.com.au/contactus"
+        />
       </Head>
 
       {/* Google Analytics Script */}
@@ -492,7 +517,7 @@ export default function Contactus() {
 
       <main className="flex-grow pt-20 pb-12 px-4 sm:px-6 lg:px-16 xl:px-20">
         <h1 className="text-2xl sm:text-3xl md:text-4xl text-center mb-8 sm:mb-12 pt-10 font-bold text-[#E3A890]">
-          Contact Adelaide French Polishers – Furniture Restoration Specialists
+          Contact Adelaide French Polishers - Furniture Restoration Specialists
         </h1>
 
         <div className="max-w-7xl mx-auto">
