@@ -52,12 +52,40 @@ export default function Gallery() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       <Head>
-        <title>Furniture Restoration Gallery | Adelaide French Polishers</title>
+        <title>
+          Furniture Restoration Gallery | Adelaide French Polishers | Before &
+          After Photos
+        </title>
         <meta
           name="description"
-          content="Browse our gallery of professional furniture restoration, French polishing, and modern finishes. View before-and-after transformations by Adelaide French Polishers."
+          content="Browse our comprehensive gallery of professional furniture restoration, French polishing, and modern finishes. View stunning before-and-after transformations by Adelaide French Polishers across South Australia."
+        />
+        <meta
+          name="keywords"
+          content="furniture restoration gallery adelaide, french polishing before after, antique furniture restoration photos, furniture refinishing gallery, adelaide french polishers gallery, furniture restoration examples, french polishing examples, furniture repair gallery"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          property="og:title"
+          content="Furniture Restoration Gallery | Adelaide French Polishers"
+        />
+        <meta
+          property="og:description"
+          content="Browse our comprehensive gallery of professional furniture restoration, French polishing, and modern finishes."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://adelaidefrenchpolishers.com.au/gallery"
+        />
+        <meta
+          property="og:image"
+          content="https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png"
+        />
+        <link
+          rel="canonical"
+          href="https://adelaidefrenchpolishers.com.au/gallery"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-6QGSSZ2J06"
           strategy="afterInteractive"
@@ -133,7 +161,7 @@ function SlideshowCard({ item }) {
       {/* Media (Slideshow on Hover) */}
       <Image
         src={item.media[currentImageIndex]}
-        alt={`${item.name} – ${
+        alt={`${item.name} - ${
           item.description ||
           "Furniture Restoration Project by Adelaide French Polishers"
         }`}

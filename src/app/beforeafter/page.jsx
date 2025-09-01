@@ -89,13 +89,38 @@ export default function Beforeafter() {
       <Head>
         <title>
           Before and After | Furniture Restoration Projects | Adelaide French
-          Polishers
+          Polishers | South Australia
         </title>
         <meta
           name="description"
-          content="View dramatic before-and-after transformations of antique furniture, modern finishes, and French polishing projects handled by Adelaide French Polishers."
+          content="View dramatic before-and-after transformations of antique furniture, modern finishes, and French polishing projects handled by Adelaide French Polishers. See real restoration results across South Australia."
+        />
+        <meta
+          name="keywords"
+          content="furniture restoration before after adelaide, french polishing transformations, antique furniture before after, furniture refinishing results, adelaide french polishers before after, furniture restoration examples, french polishing examples, furniture repair before after"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          property="og:title"
+          content="Before and After | Furniture Restoration Projects | Adelaide French Polishers"
+        />
+        <meta
+          property="og:description"
+          content="View dramatic before-and-after transformations of antique furniture, modern finishes, and French polishing projects."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://adelaidefrenchpolishers.com.au/beforeafter"
+        />
+        <meta
+          property="og:image"
+          content="https://adelaidefrenchpolishers.com.au/assets/AFP_Logo2_800x_no_bg.png"
+        />
+        <link
+          rel="canonical"
+          href="https://adelaidefrenchpolishers.com.au/beforeafter"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-6QGSSZ2J06"
           strategy="afterInteractive"

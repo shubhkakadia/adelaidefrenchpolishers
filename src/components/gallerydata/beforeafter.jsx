@@ -21,8 +21,6 @@ const removalAfter1 = "/assets/beforeafter/before after 001.jpg";
 const burgularyBefore = "/assets/beforeafter/IMG_3509.jpg";
 const burgularyAfter = "/assets/beforeafter/IMG_3665.jpg";
 
-
-
 export const beforeafter = [
   {
     name: "fire",

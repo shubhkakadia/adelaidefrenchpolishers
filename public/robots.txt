@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://adelaidefrenchpolishers.com.au/sitemap.xml
+
+# Disallow admin areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /uploads/
+
+# Allow important pages
+Allow: /aboutus
+Allow: /gallery
+Allow: /beforeafter
+Allow: /movingservice
+Allow: /coverage
+Allow: /contactus

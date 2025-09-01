@@ -85,6 +85,9 @@ export default function Navbar({ isCollapsed }) {
             <NavLink isCollapsed={isCollapsed} href="/movingservice">
               Moving Service
             </NavLink>
+            <NavLink isCollapsed={isCollapsed} href="/coverage">
+              Coverage
+            </NavLink>
             <NavLink isCollapsed={isCollapsed} href="/contactus">
               Contact Us
             </NavLink>
@@ -126,6 +129,9 @@ export default function Navbar({ isCollapsed }) {
           </NavLink>
           <NavLink isCollapsed={isCollapsed} href="/movingservice">
             Moving Service
+          </NavLink>
+          <NavLink isCollapsed={isCollapsed} href="/coverage">
+            Coverage
           </NavLink>
           <NavLink isCollapsed={isCollapsed} href="/contactus">
             Contact Us
