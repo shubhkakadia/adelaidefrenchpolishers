@@ -7,6 +7,7 @@ import Carousel from "@/components/carousel";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import NewsletterPopup from "@/components/newsLetterPopup";
+import GoogleReviewsCarousel from "@/components/GoogleReviewsCarousel";
 import Script from "next/script";
 import Head from "next/head";
 // adel_french_polishers15_900x
@@ -282,6 +283,11 @@ export default function LandingPage() {
           Adelaide. Contact us for bulk restoration projects or ongoing
           maintenance contracts tailored to your needs.
         </p>
+      </div>
+
+      {/* Carousel Card for Reviews */}
+      <div className="bg-gray-100 py-16">
+        <GoogleReviewsCarousel />
       </div>
 
       <Script id="structured-data" type="application/ld+json">
