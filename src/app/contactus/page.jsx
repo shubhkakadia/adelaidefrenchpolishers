@@ -42,9 +42,9 @@ export default function Contactus() {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    // File limits without compression
-    const maxFileSize = 10 * 1024 * 1024; // 10MB per file
-    const maxTotalSize = 10 * 1024 * 1024; // 10MB total
+    // File limits without compression - reduced to work with nginx
+    const maxFileSize = 5 * 1024 * 1024; // 5MB per file
+    const maxTotalSize = 5 * 1024 * 1024; // 5MB total
 
     // Filter out non-image files and oversized files
     const imageFiles = files.filter((file) => file.type.startsWith("image/"));
@@ -56,7 +56,7 @@ export default function Contactus() {
     // Show warnings for rejected files
     if (oversizedFiles.length > 0) {
       toast.error(
-        `${oversizedFiles.length} file(s) exceed 10MB limit and were skipped`,
+        `${oversizedFiles.length} file(s) exceed 5MB limit and were skipped`,
         {
           position: "top-right",
           autoClose: 5000,
@@ -102,7 +102,7 @@ export default function Contactus() {
         file.size;
 
       if (currentTotalSize + newTotalSize > maxTotalSize) {
-        toast.error("Total file size would exceed 10MB limit", {
+        toast.error("Total file size would exceed 5MB limit", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -332,8 +332,21 @@ export default function Contactus() {
           });
 
           if (!uploadResponse.ok) {
-            const errorData = await uploadResponse.json();
-            throw new Error(errorData.message || "Failed to upload images");
+            // Handle 413 Request Entity Too Large error
+            if (uploadResponse.status === 413) {
+              throw new Error("File size too large. Please reduce file sizes to under 5MB total.");
+            }
+            
+            // Try to parse JSON error response
+            let errorMessage = "Failed to upload images";
+            try {
+              const errorData = await uploadResponse.json();
+              errorMessage = errorData.message || errorMessage;
+            } catch (parseError) {
+              // If response is not JSON (like HTML error page), use status text
+              errorMessage = uploadResponse.statusText || errorMessage;
+            }
+            throw new Error(errorMessage);
           }
 
           const uploadResult = await uploadResponse.json();
@@ -733,7 +746,7 @@ export default function Contactus() {
                           <p className="pl-1">or drag and drop</p>
                         </div>
                         <p className="text-xs text-gray-500">
-                          Images up to 10MB (auto-compressed to 2MB each)
+                          Images up to 5MB total (max 5MB per file)
                         </p>
                       </div>
                     </div>
@@ -749,7 +762,7 @@ export default function Contactus() {
                           ) /
                           (1024 * 1024)
                         ).toFixed(1)}
-                        MB of 10MB used
+                        MB of 5MB used
                       </div>
                     )}
 

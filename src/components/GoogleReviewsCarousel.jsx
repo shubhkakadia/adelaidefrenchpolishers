@@ -38,7 +38,7 @@ const GoogleReviewsCarousel = () => {
         
         if (data.reviews && data.reviews.length > 0) {
           // Take maximum 4 reviews as requested
-          setReviews(data.reviews.slice(0, 4));
+          setReviews(data.reviews);
         } else {
           setError("No reviews found");
         }
