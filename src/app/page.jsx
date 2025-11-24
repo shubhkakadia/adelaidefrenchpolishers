@@ -21,6 +21,7 @@ const FrenchPolishing = "/assets/FrenchPolishing.png";
 export default function LandingPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [interaction, setInteraction] = useState(false);
+  const [openFAQ, setOpenFAQ] = useState(null);
 
   // Show the popup after 10 seconds of user interaction
   useEffect(() => {
@@ -81,6 +82,44 @@ export default function LandingPage() {
 
   const images = [slide1, slide2, slide3];
   const [isNavbarCollapsed, setNavbarCollapsed] = useState(false);
+
+  const faqs = [
+    {
+      question: "Can you restore a scratched or damaged dining table?",
+      answer:
+        "Yes. We repair scratches, dents, chips, and wear marks, then refinish the surface to make your dining table look like new again.",
+    },
+    {
+      question: "Do you repair water rings or heat marks on wood?",
+      answer:
+        "Absolutely. We can remove white water rings, black moisture stains, and heat marks using professional restoration techniques that revive the original finish.",
+    },
+    {
+      question: "Can you match existing stain or colour?",
+      answer:
+        "Yes. We custom-match stains and colours to blend seamlessly with your existing furniture or interior décor, ensuring a consistent and natural look.",
+    },
+    {
+      question: "Do you repair chipped veneer?",
+      answer:
+        "Yes. We repair, replace, or rebuild chipped and damaged veneer, restoring the surface so it looks smooth and uniform.",
+    },
+    {
+      question: "Can you restore old pianos or antique wooden items?",
+      answer:
+        "Yes, we specialise in restoring antique furniture and pianos while preserving their character, value, and original craftsmanship.",
+    },
+    {
+      question: "Do you offer onsite repairs or only workshop service?",
+      answer:
+        "Both. Minor repairs can be done onsite, while larger restoration and polishing work is completed in our workshop for the best results.",
+    },
+    {
+      question: "Can French polishing be done on modern furniture?",
+      answer:
+        "Yes. French polishing can be applied to both antique and modern timber furniture, giving it a premium, high-gloss, hand-crafted finish.",
+    },
+  ];
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -288,6 +327,63 @@ export default function LandingPage() {
       {/* Carousel Card for Reviews */}
       <div className="bg-gray-100 py-16">
         <GoogleReviewsCarousel />
+      </div>
+
+      {/* FAQ Section */}
+      <div className="bg-gray-100 py-20 px-4 sm:px-6 md:px-8">
+        <div className="max-w-4xl mx-auto">
+          <h2
+            data-aos="fade-up"
+            className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12"
+          >
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+                className="bg-white rounded-lg shadow-md overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                  className="cursor-pointer w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <span className="text-lg font-semibold text-gray-800 pr-4">
+                    {faq.question}
+                  </span>
+                  <svg
+                    className={`w-6 h-6 text-[#E3A890] transition-transform duration-300 flex-shrink-0 ${
+                      openFAQ === index ? "transform rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    openFAQ === index
+                      ? "max-h-96 opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="px-6 py-4 text-gray-600 border-t border-gray-200">
+                    {faq.answer}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <Script id="structured-data" type="application/ld+json">
