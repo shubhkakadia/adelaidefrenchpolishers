@@ -197,6 +197,12 @@ export default function Footer() {
                 Before & After
               </Link>
               <Link
+                href="/blogs"
+                className="block text-gray-300 text-sm hover:text-[#E3A890] transition-colors duration-200"
+              >
+                Blog
+              </Link>
+              <Link
                 href="/coverage"
                 className="block text-gray-300 text-sm hover:text-[#E3A890] transition-colors duration-200"
               >
